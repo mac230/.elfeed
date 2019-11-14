@@ -18,7 +18,7 @@
 
 
 
-** Biorxiv                                                          :biorxiv:
+** Biorxiv                                                           :biorxiv:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology][rxiv_cell_bio]]                                               :rxiv_cell_bio:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics][rxiv_genomics]]                                               :rxiv_genomics:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics][rxiv_genetics]]                                               :rxiv_genetics:
