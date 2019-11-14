@@ -1,0 +1,35 @@
+# My elfeed Org File     -*- mode: org; fill-column: 80; eval: (elisp-org-hook); eval: (auto-fill-mode t) -*-
+
+* Feed                                                               :elfeed:
+** Pubmed                                                             :pubmed:
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1x9bY_ZPGMI-WNok46K5sa8KJdUXTERyDGcY8TAD38LR7hUgwB][nature]]                                                             :nature:
+
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1xu-3vENN2MKkGMHLZb2Uk0XFeWKZx2DWu3hOsQW5yS9REKYLw][science]]                                                           :science:
+
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=16uwQpOeqFYN8R3vULzEZgJuhluycOZ2QFpa-rdy6y4QvrBcSe][cell]]                                                                 :cell:
+
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NGmwZeh8JwYIxl-_piMmRRmNM2TRIjibYZkg7eYTLM5bw6sf-][nature_biotech]]                                             :nature_biotech:
+
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1LqKQ9r8nlqaZrQnKP1OLOGM3wrZIINX8VAHI1t_4hCUVa95FY][nature_genetics]]                                           :nature_genetics:
+
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NSu_CQNBizymYejD9-Ot-IYbytteUrMny0SSFWm17hecDMkGM][cochran_reviews]]                                           :cochran_reviews:
+*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1lkZ0SIS2BVLgpHkq-EtqYtgV9UCXuW3rUKYQAM8ule9KDakh4][pnas]]                                                                 :pnas:
+
+
+
+
+** Biorxiv                                                          :biorxiv:
+*** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology][rxiv_cell_bio]]                                               :rxiv_cell_bio:
+*** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics][rxiv_genomics]]                                               :rxiv_genomics:
+*** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics][rxiv_genetics]]                                               :rxiv_genetics:
+*** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology][rxiv_snyth_bio]]                                             :rxiv_synth_bio:
+
+
+
+** Emacs                                                               :emacs:
+*** [[https://planet.emacslife.com/atom.xml][planet_emacs]]                                                 :planet_emacs:
+
+*** [[http://pragmaticemacs.com/feed/][pragmatic_emacs]]                                           :pragmatic_emacs:
+
+
+
