@@ -100,14 +100,21 @@
     (bjm/elfeed-load-db-and-open)))
 
 
+(defun my-fig-open ()
+  (interactive)
+  (org-next-link)
+  (org-open-at-point))
+
+
 
 ;; -----
 ;; setup keys for my preference
 ;; in an entry
 (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
+(define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
 
 ;; in the search buffer
 (define-key elfeed-search-mode-map (kbd "a") (lambda () (interactive) (mac-bookmark-pubmed)))
-(define-key elfeed-search-mode-map (kbd "e") (lambda () (interactive) (mac-bookmark-rxiv)))
-(define-key elfeed-search-mode-map (kbd "z") (lambda () (interactive) (mac-bookmark-emacs)))
+(define-key elfeed-search-mode-map (kbd "e") (lambda () (interactive) (mac-bookmark-emacs)))
+(define-key elfeed-search-mode-map (kbd "z") (lambda () (interactive) (mac-bookmark-rxiv)))
 (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
