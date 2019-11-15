@@ -4,7 +4,8 @@
   :ensure t
   :config
   (elfeed-update)
-  (setq elfeed-curl-program-name "curl"))
+  (setq elfeed-curl-program-name "curl")
+  (setq elfeed-curl-timeout 120))
 
 (use-package elfeed-org
   :ensure t
@@ -29,21 +30,46 @@
         "http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics"
         "http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology"
 
-        ;; pubmed 
-        ;; pubmed nature
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1x9bY_ZPGMI-WNok46K5sa8KJdUXTERyDGcY8TAD38LR7hUgwB"
-        ;; pubmed science
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1xu-3vENN2MKkGMHLZb2Uk0XFeWKZx2DWu3hOsQW5yS9REKYLw"
-        ;; pubmed cell
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=16uwQpOeqFYN8R3vULzEZgJuhluycOZ2QFpa-rdy6y4QvrBcSe"
-        ;; pubmed nature biotechnology
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NGmwZeh8JwYIxl-_piMmRRmNM2TRIjibYZkg7eYTLM5bw6sf-"
+        ;; nature
+        ;; nature journal
+        "http://feeds.nature.com/nature/rss/current"
+        ;; nature genetics
+        "http://feeds.nature.com/ng/rss/current"
+        ;; nature biotech
+        "http://feeds.nature.com/nbt/rss/current"
+        ;; nature systems biology
+        "https://www.nature.com/npjsba/"
+
+        ;; science
+        ;; journal TOC
+        "http://science.sciencemag.org/rss/current.xml"
+        ;; this week in science
+        "http://science.sciencemag.org/rss/twis.xml"
+
+        ;; elife
+        "https://elifesciences.org/rss/recent.xml"
+
+        ;; cell
+        "http://www.cell.com/cell/inpress.rss"
+        "http://www.cell.com/cell/current.rss"
+
+        ;; GSA
+        ;; genetics
+        "https://www.genetics.org/rss/current.xml"
+        ;; G3
+        "https://www.g3journal.org/rss/current.xml"
+
+        ;; NAR
+        "https://academic.oup.com/rss/site_5127/3091.xml"
+
+
+        ;; PNAS
+        "https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles"
+
         ;; pubmed cochrane database reviews
         "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NSu_CQNBizymYejD9-Ot-IYbytteUrMny0SSFWm17hecDMkGM"
-        ;; pubmed nature genetics
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1LqKQ9r8nlqaZrQnKP1OLOGM3wrZIINX8VAHI1t_4hCUVa95FY"
-        ;; pubmed proc natl acad sci
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1lkZ0SIS2BVLgpHkq-EtqYtgV9UCXuW3rUKYQAM8ule9KDakh4"
+
+        ;; emacs
         ;; pragmatic emacs
         "http://pragmaticemacs.com/feed/"
         ;; planet emacs
@@ -60,10 +86,10 @@
   (bookmark-maybe-load-default-file)
   (bookmark-jump "elfeed-pubmed"))
 
-(defun mac-bookmark-rxiv ()
+(defun mac-bookmark-biorxiv ()
   "Jump to pubmed entries."
   (bookmark-maybe-load-default-file)
-  (bookmark-jump "elfeed-rxiv"))
+  (bookmark-jump "elfeed-biorxiv"))
 
 (defun mac-bookmark-emacs ()
   "Jump to pubmed entries."
@@ -80,7 +106,8 @@
   (interactive)
   (elfeed-db-load)
   (elfeed)
-  (elfeed-search-update--force))
+  (elfeed-search-update--force)
+  (elfeed-update))
 
 
 ;; write to disk when quiting
@@ -88,16 +115,19 @@
   "Wrapper to save the elfeed db to disk before burying buffer"
   (interactive)
   (elfeed-db-save)
-  (elfeed-kill-buffer))
+  (kill-buffer "*elfeed-search*"))
 
 
 ;; roll into a single function
 (defun mac-elfeed ()
   "Function for using elfeed."
   (interactive)
-  (if (bufferp (get-buffer "*elfeed-search*"))
+  (let ((ef (get-buffer "*elfeed-search*")))
+    (if (and
+         (bufferp ef)
+         (eq (current-buffer) ef))
       (bjm/elfeed-save-db-and-bury)
-    (bjm/elfeed-load-db-and-open)))
+    (bjm/elfeed-load-db-and-open))))
 
 
 (defun my-fig-open ()
@@ -116,5 +146,5 @@
 ;; in the search buffer
 (define-key elfeed-search-mode-map (kbd "a") (lambda () (interactive) (mac-bookmark-pubmed)))
 (define-key elfeed-search-mode-map (kbd "e") (lambda () (interactive) (mac-bookmark-emacs)))
-(define-key elfeed-search-mode-map (kbd "z") (lambda () (interactive) (mac-bookmark-rxiv)))
+(define-key elfeed-search-mode-map (kbd "v") (lambda () (interactive) (mac-bookmark-biorxiv)))
 (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
