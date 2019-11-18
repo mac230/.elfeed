@@ -10,13 +10,11 @@
 
 *** [["https://www.nature.com/npjsba/"][nature_systems]]                                             :nature_systems:
 
-*** [[http://science.sciencemag.org/rss/current.xml][science]]                                                           :science:
+*** [[http://science.sciencemag.org/rss/current.xml][science]]                                                      :science_jour:
 
 *** [[http://science.sciencemag.org/rss/twis.xml][this_week_science]]                                       :science_this_week:
 
 *** [[https://elifesciences.org/rss/recent.xml][elife]]                                                               :elife:
-
-
 *** [[http://www.cell.com/cell/inpress.rss][cell]]                                                                 :cell:
 
 *** [[http://www.cell.com/cell/current.rss][cell_current]]                                                 :cell_current:
@@ -37,11 +35,13 @@
 
 
 
+
 ** Biorxiv                                                              :rxiv:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology][rxiv_cell_bio]]                                               :rxiv_cell_bio:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics][rxiv_genomics]]                                               :rxiv_genomics:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics][rxiv_genetics]]                                               :rxiv_genetics:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology][rxiv_snyth_bio]]                                             :rxiv_synth_bio:
+
 
 
 

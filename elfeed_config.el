@@ -4,8 +4,12 @@
   :ensure t
   :config
   (elfeed-update)
+  ;; the default filter elfeed uses 
+  (setq-default elfeed-search-filter "@6-months-ago +unread")
   (setq elfeed-curl-program-name "curl")
-  (setq elfeed-curl-timeout 120))
+  (setq elfeed-curl-timeout 200)
+  ;; this is slow on windows, so give it a lot of time
+  (setq url-queue-timeout 1000))
 
 (use-package elfeed-org
   :ensure t
@@ -17,6 +21,13 @@
 ;; -----
 ;; appearance customization
 (setq elfeed-search-title-max-width 140)
+
+
+;; -----
+;; make tagging entries as favorites easier
+(defun mac-tag-favorite ()
+  "Tag an entry as a favorite for elfeed."
+  (elfeed-show-tag 'favorite))
 
 
 
@@ -62,10 +73,8 @@
         ;; NAR
         "https://academic.oup.com/rss/site_5127/3091.xml"
 
-
         ;; PNAS
         "https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles"
-
         ;; pubmed cochrane database reviews
         "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NSu_CQNBizymYejD9-Ot-IYbytteUrMny0SSFWm17hecDMkGM"
 
