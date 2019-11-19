@@ -49,6 +49,6 @@
 *** [[https://planet.emacslife.com/atom.xml][planet_emacs]]                                                 :planet_emacs:
 
 *** [[http://pragmaticemacs.com/feed/][pragmatic_emacs]]                                           :pragmatic_emacs:
-
+*** [[https://next.atlas.engineer/feed][next_browser]]                                                 :next_browser:
 
 

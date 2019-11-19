@@ -26,7 +26,7 @@
 ;; -----
 ;; make tagging entries as favorites easier
 (defun mac-tag-favorite ()
-  "Tag an entry as a favorite for elfeed."
+  "Tag an entry as a favorite for elfeed while reading it."
   (elfeed-show-tag 'favorite))
 
 
@@ -89,21 +89,80 @@
 
 
 ;; -----
-;; bookmarks
-(defun mac-bookmark-pubmed ()
-  "Jump to pubmed entries."
-  (bookmark-maybe-load-default-file)
-  (bookmark-jump "elfeed-pubmed"))
+;; view/tag specific feeds
+(defun mac-elfeed-science ()
+  "Show unread science entries in elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+science +unread @6-months-ago"))
+  
+(defun mac-elfeed-rxiv ()
+  "Show unread biorxiv entries in elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+rxiv +unread @6-months-ago"))
 
-(defun mac-bookmark-biorxiv ()
-  "Jump to pubmed entries."
-  (bookmark-maybe-load-default-file)
-  (bookmark-jump "elfeed-biorxiv"))
+(defun mac-elfeed-emacs ()
+  "Show unread emacs entries in elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+emacs +unread @6-months-ago"))
 
-(defun mac-bookmark-emacs ()
-  "Jump to pubmed entries."
-  (bookmark-maybe-load-default-file)
-  (bookmark-jump "elfeed-emacs"))
+(defun mac-elfeed-default ()
+  "Show the default filter for elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+unread @6-months-ago"))
+
+(defun mac-elfeed-favorite-tag ()
+  "Tag the selected entry as a favorite.  I'll come back to it later."
+  (interactive)
+  (let* ((entries (elfeed-search-selected))
+         (tag 'favorite))
+    (cl-loop for entry in entries do (elfeed-tag entry tag))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (use-region-p) (forward-line))))
+
+(defun mac-elfeed-favorite-untag ()
+  "Remove 'favorite' tag from all selected entries."
+  (interactive )
+  (let* ((entries (elfeed-search-selected))
+         (tag 'favorite))
+    (cl-loop for entry in entries do (elfeed-untag entry tag))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (use-region-p) (forward-line))))
+
+(defalias 'mac-elfeed-favorite-toggle
+  (elfeed-expose #'elfeed-search-toggle-all 'favorite))
+  
+(defun mac-elfeed-favorites ()
+  "Show entries marked as favorites in elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+favorite"))
+
+(defun mac-elfeed-old-tag ()
+  "Tag the selected entry as old.  I'll come back to it later."
+  (interactive)
+  (let* ((entries (elfeed-search-selected))
+         (tag 'old))
+    (cl-loop for entry in entries do (elfeed-tag entry tag))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (use-region-p) (forward-line))))
+
+(defun mac-elfeed-old-untag ()
+  "Remove 'old' tag from all selected entries."
+  (interactive )
+  (let* ((entries (elfeed-search-selected))
+         (tag 'old))
+    (cl-loop for entry in entries do (elfeed-untag entry tag))
+    (mapc #'elfeed-search-update-entry entries)
+    (unless (use-region-p) (forward-line))))
+
+(defalias 'mac-elfeed-old-toggle
+  (elfeed-expose #'elfeed-search-toggle-all 'old))
+
+(defun mac-elfeed-not-old-new ()
+  "Show the new entries filter for elfeed."
+  (interactive)
+  (elfeed-search-set-filter "+unread -old @6-months-ago"))
+
+
 
 
 ;; -----
@@ -148,12 +207,27 @@
 
 ;; -----
 ;; setup keys for my preference
-;; in an entry
-(define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
-(define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
+(eval-after-load 'elfeed-search
+  (progn
+    ;; in an entry
+    (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
+    (define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
+    (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
+    
+    ;; in the "*elfeed-search*" buffer
+    (define-key elfeed-search-mode-map (kbd "a") 'mac-elfeed-science)
+    (define-key elfeed-search-mode-map (kbd "e") 'mac-elfeed-emacs)
+    (define-key elfeed-search-mode-map (kbd "v") 'mac-elfeed-rxiv)
+    (define-key elfeed-search-mode-map (kbd "d") 'mac-elfeed-default)    
+    (define-key elfeed-search-mode-map (kbd "f") 'mac-elfeed-favorite-toggle)
+    (define-key elfeed-search-mode-map (kbd "F")  'mac-elfeed-favorites)
+    (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
+    (define-key elfeed-search-mode-map (kbd "o") 'mac-elfeed-old-toggle)
+    (define-key elfeed-search-mode-map (kbd ";") 'mac-elfeed-not-old-new)
+    )
+  )
 
-;; in the search buffer
-(define-key elfeed-search-mode-map (kbd "a") (lambda () (interactive) (mac-bookmark-pubmed)))
-(define-key elfeed-search-mode-map (kbd "e") (lambda () (interactive) (mac-bookmark-emacs)))
-(define-key elfeed-search-mode-map (kbd "v") (lambda () (interactive) (mac-bookmark-biorxiv)))
-(define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
+
+;; -----
+;; git tracking of index file
+;; (shell-command )
