@@ -220,7 +220,7 @@
     (define-key elfeed-search-mode-map (kbd "v") 'mac-elfeed-rxiv)
     (define-key elfeed-search-mode-map (kbd "d") 'mac-elfeed-default)    
     (define-key elfeed-search-mode-map (kbd "f") 'mac-elfeed-favorite-toggle)
-    (define-key elfeed-search-mode-map (kbd "F")  'mac-elfeed-favorites)
+    (define-key elfeed-search-mode-map (kbd "F") 'mac-elfeed-favorites)
     (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
     (define-key elfeed-search-mode-map (kbd "o") 'mac-elfeed-old-toggle)
     (define-key elfeed-search-mode-map (kbd ";") 'mac-elfeed-not-old-new)

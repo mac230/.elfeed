@@ -1,4 +1,4 @@
-# My elfeed Org File     -*- mode: org; fill-column: 80; eval: (elisp-org-hook); eval: (auto-fill-mode t) -*-
+# My elfeed Org File     
 
 * Feed                                                               :elfeed:
 ** Science                                                           :science:
