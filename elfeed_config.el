@@ -20,6 +20,7 @@
 
 ;; -----
 ;; appearance customization
+;; science articles have long titles, so set a wide width
 (setq elfeed-search-title-max-width 140)
 
 
@@ -28,64 +29,6 @@
 (defun mac-tag-favorite ()
   "Tag an entry as a favorite for elfeed while reading it."
   (elfeed-show-tag 'favorite))
-
-
-
-;; -----
-;; set up some feeds to follow
-(setq elfeed-feeds
-      '(
-        ;; various biorxiv feeds
-        "http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology"
-        "http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics"
-        "http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics"
-        "http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology"
-
-        ;; nature
-        ;; nature journal
-        "http://feeds.nature.com/nature/rss/current"
-        ;; nature genetics
-        "http://feeds.nature.com/ng/rss/current"
-        ;; nature biotech
-        "http://feeds.nature.com/nbt/rss/current"
-        ;; nature systems biology
-        "https://www.nature.com/npjsba/"
-
-        ;; science
-        ;; journal TOC
-        "http://science.sciencemag.org/rss/current.xml"
-        ;; this week in science
-        "http://science.sciencemag.org/rss/twis.xml"
-
-        ;; elife
-        "https://elifesciences.org/rss/recent.xml"
-
-        ;; cell
-        "http://www.cell.com/cell/inpress.rss"
-        "http://www.cell.com/cell/current.rss"
-
-        ;; GSA
-        ;; genetics
-        "https://www.genetics.org/rss/current.xml"
-        ;; G3
-        "https://www.g3journal.org/rss/current.xml"
-
-        ;; NAR
-        "https://academic.oup.com/rss/site_5127/3091.xml"
-
-        ;; PNAS
-        "https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles"
-        ;; pubmed cochrane database reviews
-        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NSu_CQNBizymYejD9-Ot-IYbytteUrMny0SSFWm17hecDMkGM"
-
-        ;; emacs
-        ;; pragmatic emacs
-        "http://pragmaticemacs.com/feed/"
-        ;; planet emacs
-        "https://planet.emacslife.com/atom.xml"
-        )
-      )
-
 
 
 ;; -----
@@ -170,8 +113,11 @@
 ;; functions to support syncing .elfeed between machines
 ;; makes sure elfeed reads index from disk before launching
 (defun bjm/elfeed-load-db-and-open ()
-  "Wrapper to load the elfeed db from disk before opening"
+  "Wrapper to grab the remote index and load the elfeed db from disk before opening."
   (interactive)
+  (start-process-shell-command
+   "elfeed_grab_remote" nil
+   "rsync -u mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
   (elfeed-db-load)
   (elfeed)
   (elfeed-search-update--force)
@@ -183,17 +129,23 @@
   "Wrapper to save the elfeed db to disk before burying buffer"
   (interactive)
   (elfeed-db-save)
-  (kill-buffer "*elfeed-search*"))
+  (bury-buffer (get-buffer "*elfeed-search*"))
+  (switch-to-previous-buffer)
+  ;; sync the newly saved index to my remote storage site
+  (start-process-shell-command
+   "elfeed_push_local" nil
+   "rsync -u --stats ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+  )
 
 
 ;; roll into a single function
 (defun mac-elfeed ()
   "Function for using elfeed."
   (interactive)
-  (let ((ef (get-buffer "*elfeed-search*")))
+  (let ((elfd (get-buffer "*elfeed-search*")))
     (if (and
-         (bufferp ef)
-         (eq (current-buffer) ef))
+         (bufferp elfd)
+         (eq (current-buffer) elfd))
       (bjm/elfeed-save-db-and-bury)
     (bjm/elfeed-load-db-and-open))))
 
@@ -226,8 +178,3 @@
     (define-key elfeed-search-mode-map (kbd ";") 'mac-elfeed-not-old-new)
     )
   )
-
-
-;; -----
-;; git tracking of index file
-;; (shell-command )
