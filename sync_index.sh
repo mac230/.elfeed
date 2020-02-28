@@ -12,7 +12,7 @@ cd ~/.elfeed
 touch ./rsync_log_elfeed
 echo $(date) > ./rsync_log_elfeed
 ## make a local backup of the index prior to syncing
-cp ./index ~/Desktop/emacs/local_elfeed_index_backup
+cp ./index ~/elfeed_index_local_backup
 
 
 ## -----
