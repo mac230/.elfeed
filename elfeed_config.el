@@ -116,7 +116,7 @@
   "Wrapper to grab the remote index and load the elfeed db from disk before opening."
   (interactive)
   (start-process-shell-command
-   "elfeed_grab_remote" "*elfeed-log*"
+   (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
    "rsync -uvz mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
   (elfeed-db-load)
   (elfeed)
@@ -133,7 +133,7 @@
   (switch-to-previous-buffer)
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
-   (concat (format-time-string "%Y.%m.%d %k:%M:%S %p") " elfeed_push_local") "*elfeed-log*"
+   (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
    "rsync -uvz --stats ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
   )
 
