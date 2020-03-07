@@ -115,13 +115,29 @@
 (defun bjm/elfeed-load-db-and-open ()
   "Wrapper to grab the remote index and load the elfeed db from disk before opening."
   (interactive)
-  (start-process-shell-command
-   (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
-   "scp mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
-  (elfeed-db-load)
-  (elfeed)
-  (elfeed-search-update--force)
-  (elfeed-update))
+  (let ((pr (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
+    (start-process-shell-command
+     pr "*elfeed-log*"
+     "rsync -uv mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
+    ;; wait_contingency: don't do anything until we've finished syncing
+    ;; with the remote index
+    (unless
+	(not
+	 (= (process-exit-status (get-process pr)) 0))
+      (sit-for 0.5))
+    ;; now load the db
+    (with-current-buffer (get-buffer-create "*elfeed-log*")
+      (read-only-mode -1)
+      (insert
+       (concat
+	"Loaded elfeed db at "
+	(format-time-string "%Y.%m.%d %k:%M:%S:%3N %p") "\n"))
+      (read-only-mode 1))
+    (elfeed-db-load)
+    (elfeed)
+    (elfeed-search-update--force)
+    (elfeed-update))
+  )
 
 
 ;; write to disk when quiting
@@ -134,7 +150,7 @@
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
    (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
-   "scp ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+   "rsync -uvz ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
   )
 
 
