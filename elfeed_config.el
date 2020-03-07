@@ -117,7 +117,7 @@
   (interactive)
   (start-process-shell-command
    (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
-   "rsync -uvz mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
+   "scp mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
   (elfeed-db-load)
   (elfeed)
   (elfeed-search-update--force)
@@ -134,7 +134,7 @@
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
    (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
-   "rsync -uvz --stats ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+   "scp ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
   )
 
 
