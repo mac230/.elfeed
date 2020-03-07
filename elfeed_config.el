@@ -149,7 +149,7 @@
   (switch-to-previous-buffer)
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
-   (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S %p")) "*elfeed-log*"
+   (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")) "*elfeed-log*"
    "rsync -uvz ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
   )
 
