@@ -79,6 +79,12 @@
   (interactive)
   (elfeed-search-set-filter "+favorite"))
 
+(defun mac-elfeed-unread-not-favorite ()
+  "Show entries marked as favorites in elfeed.  
+Useful for catching things you might like to mark as read."
+  (interactive)
+  (elfeed-search-set-filter "+unread -favorite"))
+
 (defun mac-elfeed-old-tag ()
   "Tag the selected entry as old.  I'll come back to it later."
   (interactive)
@@ -192,5 +198,6 @@
     (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
     (define-key elfeed-search-mode-map (kbd "o") 'mac-elfeed-old-toggle)
     (define-key elfeed-search-mode-map (kbd ";") 'mac-elfeed-not-old-new)
+    (define-key elfeed-search-mode-map (kbd "m") 'mac-elfeed-unread-not-favorite)    
     )
   )
