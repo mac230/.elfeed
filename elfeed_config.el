@@ -124,7 +124,7 @@ Useful for catching things you might like to mark as read."
   (let ((pr (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
     (start-process-shell-command
      pr "*elfeed-log*"
-     "rsync -ui mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
+     "scp mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
     ;; wait_contingency: don't do anything until we've finished syncing
     ;; with the remote index
     (unless
@@ -142,7 +142,8 @@ Useful for catching things you might like to mark as read."
     (elfeed-db-load)
     (elfeed)
     (elfeed-search-update--force)
-    (elfeed-update))
+    (elfeed-update)
+    (message "elfeed-load-db-and-open"))
   )
 
 
@@ -157,6 +158,7 @@ Useful for catching things you might like to mark as read."
   (start-process-shell-command
    (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")) "*elfeed-log*"
    "rsync -ui ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+  (message "elfeed-save-db-and-bury")
   )
 
 
@@ -178,6 +180,17 @@ Useful for catching things you might like to mark as read."
   (org-open-at-point))
 
 
+;; -----
+;; open links with a custom function
+(defun mac-elfeed-open-link ()
+  "Open links in elfeed."
+  (interactive)
+  (beginning-of-buffer)
+  (re-search-forward "^Link:.." nil nil)
+  (shr-browse-url))
+
+
+
 
 ;; -----
 ;; setup keys for my preference
@@ -185,7 +198,7 @@ Useful for catching things you might like to mark as read."
   (progn
     ;; in an entry
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
-    (define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
+    (define-key elfeed-show-mode-map (kbd "l") 'mac-elfeed-open-link)
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
     
     ;; in the "*elfeed-search*" buffer
