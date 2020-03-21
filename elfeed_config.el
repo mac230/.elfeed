@@ -123,8 +123,8 @@ Useful for catching things you might like to mark as read."
   (interactive)
   (let ((pr (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
     (start-process-shell-command
-     pr "*elfeed-log*"
-     "scp mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
+     pr (get-buffer-create "*elfeed-log*")
+     "rsync -ai mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
     ;; wait_contingency: don't do anything until we've finished syncing
     ;; with the remote index
     (unless
@@ -157,7 +157,7 @@ Useful for catching things you might like to mark as read."
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
    (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")) "*elfeed-log*"
-   "rsync -ui ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+   "rsync -ai ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
   (message "elfeed-save-db-and-bury")
   )
 
