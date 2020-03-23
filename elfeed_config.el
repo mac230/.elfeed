@@ -121,10 +121,12 @@ Useful for catching things you might like to mark as read."
 (defun bjm/elfeed-load-db-and-open ()
   "Wrapper to grab the remote index and load the elfeed db from disk before opening."
   (interactive)
-  (let ((pr (concat "elfeed_grab_remote at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
+  (let ((pr (concat
+	     "elfeed_grab_remote (msi_index) at "
+	     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
     (start-process-shell-command
      pr (get-buffer-create "*elfeed-log*")
-     "rsync -ai mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index")
+     "rsync -uti mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index ~/.elfeed/index")
     ;; wait_contingency: don't do anything until we've finished syncing
     ;; with the remote index
     (unless
@@ -137,7 +139,8 @@ Useful for catching things you might like to mark as read."
       (insert
        (concat
 	"Loaded elfeed db at "
-	(format-time-string "%Y.%m.%d %k:%M:%S:%3N %p") "\n"))
+	(format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")
+	"\n"))
       (read-only-mode 1))
     (elfeed-db-load)
     (elfeed)
@@ -152,12 +155,22 @@ Useful for catching things you might like to mark as read."
   "Wrapper to save the elfeed db to disk before burying buffer"
   (interactive)
   (elfeed-db-save)
-  (bury-buffer (get-buffer "*elfeed-search*"))
   (switch-to-previous-buffer)
+  (sit-for 4)
+  ;; make a local copy of the index just in case
+  (start-process-shell-command
+   (concat
+    "elfeed_local_backup (index_local_backup) at "
+    (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
+   (get-buffer-create "*elfeed-log*")
+   "cp -v ~/.elfeed/index ~/.elfeed/index_local_backup")
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
-   (concat "elfeed_push_local at " (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")) "*elfeed-log*"
-   "rsync -ai ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index")
+   (concat
+    "elfeed_push_local (msi_index) at "
+    (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
+   (get-buffer-create "*elfeed-log*")
+   "rsync -uti ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index")
   (message "elfeed-save-db-and-bury")
   )
 
