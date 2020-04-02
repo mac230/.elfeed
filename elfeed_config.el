@@ -122,11 +122,12 @@ Useful for catching things you might like to mark as read."
   "Wrapper to grab the remote index and load the elfeed db from disk before opening."
   (interactive)
   (let ((pr (concat
-	     "elfeed_grab_remote (msi_index) at "
+	     "elfeed rsync msi_index to local_index_backup at "
 	     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
     (start-process-shell-command
      pr (get-buffer-create "*elfeed-log*")
-     "rsync -uti mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index ~/.elfeed/index")
+     "rsync -ui mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index ~/.elfeed/index_local_backup ;
+     cp -v ~/.elfeed/index_local_backup ~/.elfeed/index")
     ;; wait_contingency: don't do anything until we've finished syncing
     ;; with the remote index
     (unless
@@ -167,10 +168,10 @@ Useful for catching things you might like to mark as read."
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
    (concat
-    "elfeed_push_local (msi_index) at "
+    "elfeed rysnc local_index_backup to msi_index at "
     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
    (get-buffer-create "*elfeed-log*")
-   "rsync -uti ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index")
+   "rsync -ui ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index")
   (message "elfeed-save-db-and-bury")
   )
 
@@ -202,7 +203,14 @@ Useful for catching things you might like to mark as read."
   (re-search-forward "^Link:.." nil nil)
   (shr-browse-url))
 
-
+(defun mac-elfeed-open-link-in-next ()
+  "Open links in elfeed using the NeXT browser."
+  (interactive)  
+  (let ((browse-url-generic-program (executable-find "next"))
+      (browse-url-browser-function 'browse-url-generic))
+    (beginning-of-buffer)
+  (re-search-forward "^Link:.." nil nil)
+  (shr-browse-url)))
 
 
 ;; -----
@@ -212,6 +220,7 @@ Useful for catching things you might like to mark as read."
     ;; in an entry
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
     (define-key elfeed-show-mode-map (kbd "l") 'mac-elfeed-open-link)
+    (define-key elfeed-show-mode-map (kbd "m") 'mac-elfeed-open-link-in-next)    
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
     
     ;; in the "*elfeed-search*" buffer
