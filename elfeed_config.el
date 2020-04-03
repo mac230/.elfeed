@@ -212,6 +212,14 @@ Useful for catching things you might like to mark as read."
   (re-search-forward "^Link:.." nil nil)
   (shr-browse-url)))
 
+(defun mac-generic-open-link-in-next ()
+  "Open any link at point using the NeXT browser."
+  (let ((browse-url-generic-program (executable-find "next"))
+      (browse-url-browser-function 'browse-url-generic))
+  (shr-browse-url)))
+
+
+
 
 ;; -----
 ;; setup keys for my preference
