@@ -161,7 +161,7 @@ Useful for catching things you might like to mark as read."
   ;; make a local copy of the index just in case
   (start-process-shell-command
    (concat
-    "elfeed_local_backup (index_local_backup) at "
+    "cp index to elfeed_local_backup at "
     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
    (get-buffer-create "*elfeed-log*")
    "cp -v ~/.elfeed/index ~/.elfeed/index_local_backup")
@@ -214,6 +214,7 @@ Useful for catching things you might like to mark as read."
 
 (defun mac-generic-open-link-in-next ()
   "Open any link at point using the NeXT browser."
+  (interactive)
   (let ((browse-url-generic-program (executable-find "next"))
       (browse-url-browser-function 'browse-url-generic))
   (shr-browse-url)))
@@ -228,7 +229,8 @@ Useful for catching things you might like to mark as read."
     ;; in an entry
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
     (define-key elfeed-show-mode-map (kbd "l") 'mac-elfeed-open-link)
-    (define-key elfeed-show-mode-map (kbd "m") 'mac-elfeed-open-link-in-next)    
+    (define-key elfeed-show-mode-map (kbd "m") 'mac-elfeed-open-link-in-next)
+    (define-key elfeed-show-mode-map (kbd "M-RET") 'mac-generic-open-link-in-next) 
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
     
     ;; in the "*elfeed-search*" buffer
