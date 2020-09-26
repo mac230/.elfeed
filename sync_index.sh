@@ -9,26 +9,18 @@
 ## -----
 ## setup
 cd ~/.elfeed
-touch ./rsync_log_elfeed
-echo $(date) > ./rsync_log_elfeed
-## make a local backup of the index prior to syncing
-cp ./index ~/elfeed_index_local_backup
+touch ./rsync_log
+echo $(date) > ./rsync_log
 
 
 ## -----
 ## output
 ## get the sum for if-based comparison 
-printf "sha sum BEFORE sync: $( sum ./index | cut -f 1 -d " ")\n" >> ./rsync_log_elfeed
-cat ./rsync_log_elfeed
+printf "sha sum of local index backup: $( sum ./index_local_backup | cut -f 1 -d " ")\n" >> ./rsync_log
 
 
 ## -----
 ## syncing 
 ## push any existing LOCAL changes to the remote (MSI) index 
-rsync -u --stats ~/.elfeed/index mahlon@login.msi.umn.edu:/home/albertf/mahlon/index 
+rsync -ui ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index >> ./rsync_log
 
-## write output and sync changes from remote index 
-rsync -u --stats mahlon@login.msi.umn.edu:/home/albertf/mahlon/index ~/.elfeed/index
-printf "sha sum AFTER sync:  $( sum ./index | cut -f 1 -d " ")\n" >> ./rsync_log_elfeed
-printf "script successfully finished at $( date "+%H:%M")\n" >> ./rsync_log_elfeed
-cat ./rsync_log_elfeed

@@ -4,7 +4,7 @@
   :ensure t
   :config
   (elfeed-update)
-  ;; the default filter elfeed uses 
+  ;; the default filter elfeed uses
   (setq-default elfeed-search-filter "@6-months-ago +unread")
   (setq elfeed-curl-program-name "curl")
   (setq elfeed-curl-timeout 200)
@@ -21,7 +21,7 @@
 ;; -----
 ;; appearance customization
 ;; science articles have long titles, so set a wide width
-(setq elfeed-search-title-max-width 140)
+(setq elfeed-search-title-max-width 120)
 
 
 ;; -----
@@ -37,7 +37,7 @@
   "Show unread science entries in elfeed."
   (interactive)
   (elfeed-search-set-filter "+science +unread @6-months-ago"))
-  
+
 (defun mac-elfeed-rxiv ()
   "Show unread biorxiv entries in elfeed."
   (interactive)
@@ -73,11 +73,17 @@
 
 (defalias 'mac-elfeed-favorite-toggle
   (elfeed-expose #'elfeed-search-toggle-all 'favorite))
-  
+
 (defun mac-elfeed-favorites ()
   "Show entries marked as favorites in elfeed."
   (interactive)
   (elfeed-search-set-filter "+favorite"))
+
+(defun mac-elfeed-unread-not-favorite ()
+  "Show entries marked as favorites in elfeed.  
+Useful for catching things you might like to mark as read."
+  (interactive)
+  (elfeed-search-set-filter "+unread -favorite"))
 
 (defun mac-elfeed-unread-not-favorite ()
   "Show entries marked as favorites in elfeed.  
@@ -112,8 +118,6 @@ Useful for catching things you might like to mark as read."
   (elfeed-search-set-filter "+unread -old @6-months-ago"))
 
 
-
-
 ;; -----
 ;; multiple machine syncing functions
 ;; functions to support syncing .elfeed between machines
@@ -124,16 +128,24 @@ Useful for catching things you might like to mark as read."
   (let ((pr (concat
 	     "elfeed rsync msi_index to local_index_backup at "
 	     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))))
+
+    ;; sync with the msi database
+    (with-current-buffer (get-buffer-create "*elfeed-log*")
+      (read-only-mode -1)
+      (insert "starting msi rsync.  if you see >, means msi index was copied.\n")
+      (insert "Next, copy index_local_backup to the actual index with verbose output.\n"))
     (start-process-shell-command
      pr (get-buffer-create "*elfeed-log*")
      "rsync -ui mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index ~/.elfeed/index_local_backup ;
      cp -v ~/.elfeed/index_local_backup ~/.elfeed/index")
-    ;; wait_contingency: don't do anything until we've finished syncing
-    ;; with the remote index
+    
+    ;; wait_contingency: don't do anything until
+    ;; we've finished syncing with the remote index
     (unless
 	(not
 	 (= (process-exit-status (get-process pr)) 0))
       (sit-for 0.5))
+    
     ;; now load the db
     (with-current-buffer (get-buffer-create "*elfeed-log*")
       (read-only-mode -1)
@@ -143,6 +155,8 @@ Useful for catching things you might like to mark as read."
 	(format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")
 	"\n"))
       (read-only-mode 1))
+
+    ;; get elfeed going 
     (elfeed-db-load)
     (elfeed)
     (elfeed-search-update--force)
@@ -155,6 +169,20 @@ Useful for catching things you might like to mark as read."
 (defun bjm/elfeed-save-db-and-bury ()
   "Wrapper to save the elfeed db to disk before burying buffer"
   (interactive)
+  
+  ;; write some output to help keep track of whether syncing works 
+  (when (not (eq (current-buffer) (get-buffer "*elfeed-search*")))
+    (switch-to-buffer (get-buffer-create "*elfeed-search*")))
+  (mark-whole-buffer)
+  (shell-command-on-region
+   (point) (mark)
+   "wc -l > ~/.elfeed/tracker")
+  (shell-command-on-region
+   (point) (mark)
+   "head -n 10 >> ~/.elfeed/tracker")
+  (deactivate-mark)
+
+  ;; save the db 
   (elfeed-db-save)
   (switch-to-previous-buffer)
   (sit-for 4)
@@ -165,11 +193,13 @@ Useful for catching things you might like to mark as read."
     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
    (get-buffer-create "*elfeed-log*")
    "cp -v ~/.elfeed/index ~/.elfeed/index_local_backup")
+  
   ;; sync the newly saved index to my remote storage site
   (start-process-shell-command
    (concat
     "elfeed rysnc local_index_backup to msi_index at "
-    (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p"))
+    (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")
+    ".\nIf you see <, means that the index is being copied to msi")
    (get-buffer-create "*elfeed-log*")
    "rsync -ui ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index")
   (message "elfeed-save-db-and-bury")
@@ -180,10 +210,10 @@ Useful for catching things you might like to mark as read."
 (defun mac-elfeed ()
   "Function for using elfeed."
   (interactive)
-  (let ((elfd (get-buffer "*elfeed-search*")))
+  (let ((ef (get-buffer "*elfeed-search*")))
     (if (and
-         (bufferp elfd)
-         (eq (current-buffer) elfd))
+         (bufferp ef)
+         (eq (current-buffer) ef))
       (bjm/elfeed-save-db-and-bury)
     (bjm/elfeed-load-db-and-open))))
 
@@ -195,32 +225,24 @@ Useful for catching things you might like to mark as read."
 
 
 ;; -----
-;; open links with a custom function
-(defun mac-elfeed-open-link ()
-  "Open links in elfeed."
+;; open links using the next browser 
+(defun elfeed-open-entry-link-in-nyxt ()
+  "Open a link in an elfeed entry using the nyxt browser."
   (interactive)
-  (beginning-of-buffer)
-  (re-search-forward "^Link:.." nil nil)
-  (shr-browse-url))
-
-(defun mac-elfeed-open-link-in-next ()
-  "Open links in elfeed using the NeXT browser."
-  (interactive)  
-  (let ((browse-url-generic-program (executable-find "next"))
-      (browse-url-browser-function 'browse-url-generic))
+  (let ((browse-url-generic-program (executable-find "nyxt"))
+	(browse-url-browser-function 'browse-url-generic))
     (beginning-of-buffer)
-  (re-search-forward "^Link:.." nil nil)
-  (shr-browse-url)))
+    (org-next-link)
+    (shr-browse-url))
+  )
 
-(defun mac-generic-open-link-in-next ()
-  "Open any link at point using the NeXT browser."
+(defun elfeed-shr-open-link-in-nyxt ()
+  "Open a link in an elfeed entry using the nyxt browser."
   (interactive)
-  (let ((browse-url-generic-program (executable-find "next"))
-      (browse-url-browser-function 'browse-url-generic))
-  (shr-browse-url)))
-
-
-
+  (let ((browse-url-generic-program (executable-find "nyxt"))
+	(browse-url-browser-function 'browse-url-generic))
+    (shr-browse-url))
+  )
 
 ;; -----
 ;; setup keys for my preference
@@ -228,16 +250,18 @@ Useful for catching things you might like to mark as read."
   (progn
     ;; in an entry
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
-    (define-key elfeed-show-mode-map (kbd "l") 'mac-elfeed-open-link)
-    (define-key elfeed-show-mode-map (kbd "m") 'mac-elfeed-open-link-in-next)
-    (define-key elfeed-show-mode-map (kbd "M-RET") 'mac-generic-open-link-in-next) 
+    (define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
+    (define-key elfeed-show-mode-map (kbd "m") 'elfeed-open-entry-link-in-nyxt)
+    (define-key elfeed-show-mode-map (kbd "M-RET") 'nyxt-url-open)
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
-    
+
+    (define-key shr-map (kbd "RET") 'elfeed-shr-open-link-in-nyxt)
+
     ;; in the "*elfeed-search*" buffer
     (define-key elfeed-search-mode-map (kbd "a") 'mac-elfeed-science)
     (define-key elfeed-search-mode-map (kbd "e") 'mac-elfeed-emacs)
     (define-key elfeed-search-mode-map (kbd "v") 'mac-elfeed-rxiv)
-    (define-key elfeed-search-mode-map (kbd "d") 'mac-elfeed-default)    
+    (define-key elfeed-search-mode-map (kbd "d") 'mac-elfeed-default)
     (define-key elfeed-search-mode-map (kbd "f") 'mac-elfeed-favorite-toggle)
     (define-key elfeed-search-mode-map (kbd "F") 'mac-elfeed-favorites)
     (define-key elfeed-search-mode-map (kbd "k") 'mac-elfeed)
