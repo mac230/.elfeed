@@ -218,10 +218,14 @@ Useful for catching things you might like to mark as read."
     (bjm/elfeed-load-db-and-open))))
 
 
-(defun my-fig-open ()
+(defun mac-open-elfeed-link ()
   (interactive)
-  (org-next-link)
-  (org-open-at-point))
+  (beginning-of-buffer)
+  (re-search-forward "^Link: " nil t 1)
+  (when (not (url-get-url-at-point))
+    (forward-char 1))
+  (elfeed-shr-open-link-in-nyxt))
+
 
 
 ;; -----
