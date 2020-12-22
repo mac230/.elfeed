@@ -254,7 +254,7 @@ Useful for catching things you might like to mark as read."
   (progn
     ;; in an entry
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
-    (define-key elfeed-show-mode-map (kbd "l") 'my-fig-open)
+    (define-key elfeed-show-mode-map (kbd "l") 'mac-open-elfeed-link)
     (define-key elfeed-show-mode-map (kbd "m") 'elfeed-open-entry-link-in-nyxt)
     (define-key elfeed-show-mode-map (kbd "M-RET") 'nyxt-url-open)
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
