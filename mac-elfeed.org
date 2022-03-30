@@ -1,38 +1,59 @@
 # My elfeed Org File
+# 2022.03.26 - latest update
 
 * Feed                                                               :elfeed:
 ** Science                                                           :science:
+*** [[http://feeds.nature.com/hdy/rss/current][heredity]]                                                         :heredity:
 *** [[http://feeds.nature.com/nature/rss/current][nature]]                                                             :nature:
-*** [[http://feeds.nature.com/ng/rss/current][nature_genetics]]                                           :nature_genetics:
+*** [[http://www.nature.com/ng/current_issue/rss/][nature_genetics]]                                           :nature_genetics:
+*** [[http://feeds.nature.com/ncb/rss/current][nature_cell_bio]]                                           :nature_cell_bio:
+*** [[http://feeds.nature.com/nm/rss/current][nature_medicine]]                                           :nature_medicine:
 *** [[http://feeds.nature.com/nbt/rss/current][nature_biotech]]                                             :nature_biotech:
 *** [[http://www.nature.com/nrg/current_issue/rss][nat_rev_genetics]]                                         :nat_rev_genetics:
+*** [[http://feeds.nature.com/nrm/rss/current][nature_reviews_mol_bio]]                             :nature_reviews_mol_bio:
+*** [[http://feeds.nature.com/nsmb/rss/current][nature_snmb]]                                                   :nature_snmb:
 *** [[http://feeds.nature.com/ncomms/rss/current][nat_comms]]                                                       :nat_comms:
-*** [[http://science.sciencemag.org/rss/current.xml][science]]                                                      :science_jour:
-*** [[http://science.sciencemag.org/rss/twis.xml][this_week_science]]                                       :science_this_week:
+*** [[https://www.science.org/action/showFeed?type=etoc&feed=rss&jc=science][science]]                                                      :science_jour:
+*** [[https://www.science.org/action/showFeed?type=axatoc&feed=rss&jc=science][science_first_online]]                                         :science_jour:
+*** [[https://www.science.org/rss/news_current.xml][science_news]]                                                 :science_jour:
+*** [[https://www.science.org/action/showFeed?type=axatoc&feed=rss&jc=science][this_week_science]]                                       :science_this_week:
 *** [[https://elifesciences.org/rss/recent.xml][elife]]                                                               :elife:
 *** [[http://www.cell.com/cell/inpress.rss][cell]]                                                                 :cell:
-*** [[http://www.cell.com/cell/current.rss][cell_current]]                                                 :cell_current:
+*** [[http://www.cell.com/cell/current.rss][cell_current_issue]]                                                   :cell:
 *** [[http://www.cell.com/cell-reports/current.rss][cell_reports]]                                                 :cell_reports:
+*** [[https://www.cell.com/trends/genetics/rss][trends_genetics_reviews]]                           :trends_genetics_reviews:
+*** [[http://www.cell.com/trends/cell-biology/inpress.rss][trends_biology_reviews]]                             :trends_biology_reviews:
 *** [[http://www.cell.com/molecular-cell/current.rss][molecular_cell]]                                             :molecular_cell:
 *** [[http://www.cell.com/cell-systems/current.rss][cell_systems]]                                                 :cell_systems:
 *** [[http://www.cell.com/current-biology/current.rss][current_biology]]                                           :current_biology:
+*** [[https://genome.cshlp.org/rss/ahead.xml][genome_research]]                                           :genome_research:
 *** [[http://www.cell.com/ajhg/current.rss][AJHG]]                                                                 :AJHG:
-*** [[https://www.genetics.org/rss/current.xml][genetics]]                                                         :genetics:
-*** [[https://www.g3journal.org/rss/current.xml][g3]]                                                                     :g3:
-*** [[https://academic.oup.com/rss/site_5127/3091.xml][nar]]                                                                   :nar:
-*** [[https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1NSu_CQNBizymYejD9-Ot-IYbytteUrMny0SSFWm17hecDMkGM][cochran_reviews]]                                           :cochran_reviews:
-*** [[https://feeds.feedburner.com/Pnas-RssFeedOfEarlyEditionArticles][pnas]]                                                                 :pnas:
+*** [[https://academic.oup.com/rss/site_6327/4082.xml][genetics]]                                                         :genetics:
+*** [[https://academic.oup.com/rss/site_6321/4079.xml][g3]]                                                                     :g3:
+*** [[https://www.pnas.org/action/showfeed?type=searchTopic&taxonomyCode=topic&tagCode=bio-sci][pnas]]                                                                 :pnas:
 
-
+# add pubmed search terms 
+# UPS 
+# RBM45
+# QTL 
+** Pubmed                                                             :pubmed:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1tkHZW0bVYJRNeouN6xUFSLFCn-3FL5wgD9fvPQnS9D-E3OsRu/?limit=15&utm_campaign=pubmed-2&fc=20220326143130][pubmed_degron]]                                                      :degron:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1hwQrn1DrkW_IYYiSDGpUV3NyrZEBLmWCsAkMF34IQnmW2Gkpd/?limit=15&utm_campaign=pubmed-2&fc=20220326150943][khmelinskii]]                                                   :khmelinskii:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1bg2GVePA8Tv-JI9e6gYBkspg5vTLRsRtNhKj9z8bc8epHWE6B/?limit=15&utm_campaign=pubmed-2&fc=20220326151038][knop]]                                                                 :knop:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1X9MO_201KJBQKcE06PWzlz6T9miZfcXbMwCY20IZP6kDvbIfD/?limit=15&utm_campaign=pubmed-2&fc=20220326151130][varshavsky]]                                                     :varshavsky:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1RqsD81NqACX3kCXRSTJ3VJfElLu-tAoymk7xrQWSKkourS1kO/?limit=15&utm_campaign=pubmed-2&fc=20220326160311][elledge]]                                                           :elledge:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1BWfEy0KKtydklOPQwifuBoSSe8DPfwKWVUQmi61u4XRBwvwF6/?limit=15&utm_campaign=pubmed-2&fc=20220326160355][hochstrasser]]                                                 :hochstrasser:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1LK5GZMdRGzJtip9gF91OxLMWpktbM44xFPjkpwu-3_wAavIGU/?limit=15&utm_campaign=pubmed-2&fc=20220326160451][hampton]]                                                           :hampton:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1-MHQbRSTjFatlSijIKXCR7NDQH59yPPeS-QIVdmjxxnza8EgA/?limit=15&utm_campaign=pubmed-2&fc=20220326160704][bowser]]                                                             :bowser:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1jKIOHIm0MJbyjPMeQOyogZM9tVTlzcWLXHB-CPpEloJo5s9CU/?limit=15&utm_campaign=pubmed-2&fc=20220326161001][RBM45]]                                                               :RBM45:
 ** Biorxiv                                                              :rxiv:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology][rxiv_cell_bio]]                                               :rxiv_cell_bio:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics][rxiv_genomics]]                                               :rxiv_genomics:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genetics][rxiv_genetics]]                                               :rxiv_genetics:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=synthetic_biology][rxiv_snyth_bio]]                                             :rxiv_synth_bio:
 
-
 ** Emacs                                                               :emacs:
 *** [[https://planet.emacslife.com/atom.xml][planet_emacs]]                                                 :planet_emacs:
 *** [[http://pragmaticemacs.com/feed/][pragmatic_emacs]]                                           :pragmatic_emacs:
-*** [[https://next.atlas.engineer/feed][next_browser]]                                                 :next_browser:
+*** [[https://nyxt.atlas.engineer/feed][nyxt_browser]]                                                 :next_browser:
 

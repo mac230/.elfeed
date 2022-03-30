@@ -201,7 +201,7 @@ Useful for catching things you might like to mark as read."
     (format-time-string "%Y.%m.%d %k:%M:%S:%3N %p")
     ".\nIf you see <, means that the index is being copied to msi")
    (get-buffer-create "*elfeed-log*")
-   "rsync -ui ~/.elfeed/index_local_backup mahlon@login.msi.umn.edu:/home/albertf/mahlon/msi_index")
+   "rsync -ui ~/.elfeed/index_local_backup mahlon@mesabi.msi.umn.edu:/home/albertf/mahlon/msi_index")
   (message "elfeed-save-db-and-bury")
   )
 
