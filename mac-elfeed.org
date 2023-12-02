@@ -1,5 +1,6 @@
 # My elfeed Org File
 # 2022.03.26 - latest update
+# cell press RSS https://www.cell.com/action/doSearch?text1=rss&field1=AllField&startPage=&target=custom-page&content=webContent
 
 * Feed                                                               :elfeed:
 ** Science                                                           :science:
@@ -18,24 +19,20 @@
 *** [[https://www.science.org/rss/news_current.xml][science_news]]                                                 :science_jour:
 *** [[https://www.science.org/action/showFeed?type=axatoc&feed=rss&jc=science][this_week_science]]                                       :science_this_week:
 *** [[https://elifesciences.org/rss/recent.xml][elife]]                                                               :elife:
-*** [[http://www.cell.com/cell/inpress.rss][cell]]                                                                 :cell:
-*** [[http://www.cell.com/cell/current.rss][cell_current_issue]]                                                   :cell:
-*** [[http://www.cell.com/cell-reports/current.rss][cell_reports]]                                                 :cell_reports:
+*** [[https://www.cell.com/cell/inpress.rss][cell]]                                                                 :cell:
+*** [[https://www.cell.com/cell/current.rss][cell_current_issue]]                                                   :cell:
+*** [[https://www.cell.com/cell-reports/current.rss][cell_reports]]                                                 :cell_reports:
 *** [[https://www.cell.com/trends/genetics/rss][trends_genetics_reviews]]                           :trends_genetics_reviews:
-*** [[http://www.cell.com/trends/cell-biology/inpress.rss][trends_biology_reviews]]                             :trends_biology_reviews:
-*** [[http://www.cell.com/molecular-cell/current.rss][molecular_cell]]                                             :molecular_cell:
-*** [[http://www.cell.com/cell-systems/current.rss][cell_systems]]                                                 :cell_systems:
-*** [[http://www.cell.com/current-biology/current.rss][current_biology]]                                           :current_biology:
+*** [[https://www.cell.com/trends/cell-biology/inpress.rss][trends_biology_reviews]]                             :trends_biology_reviews:
+*** [[https://www.cell.com/molecular-cell/current.rss][molecular_cell]]                                             :molecular_cell:
+*** [[https://www.cell.com/cell-systems/current.rss][cell_systems]]                                                 :cell_systems:
+*** [[https://www.cell.com/current-biology/current.rss][current_biology]]                                           :current_biology:
 *** [[https://genome.cshlp.org/rss/ahead.xml][genome_research]]                                           :genome_research:
 *** [[http://www.cell.com/ajhg/current.rss][AJHG]]                                                                 :AJHG:
 *** [[https://academic.oup.com/rss/site_6327/4082.xml][genetics]]                                                         :genetics:
 *** [[https://academic.oup.com/rss/site_6321/4079.xml][g3]]                                                                     :g3:
 *** [[https://www.pnas.org/action/showfeed?type=searchTopic&taxonomyCode=topic&tagCode=bio-sci][pnas]]                                                                 :pnas:
 
-# add pubmed search terms 
-# UPS 
-# RBM45
-# QTL 
 ** Pubmed                                                             :pubmed:
 *** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1tkHZW0bVYJRNeouN6xUFSLFCn-3FL5wgD9fvPQnS9D-E3OsRu/?limit=15&utm_campaign=pubmed-2&fc=20220326143130][pubmed_degron]]                                                      :degron:
 *** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1hwQrn1DrkW_IYYiSDGpUV3NyrZEBLmWCsAkMF34IQnmW2Gkpd/?limit=15&utm_campaign=pubmed-2&fc=20220326150943][khmelinskii]]                                                   :khmelinskii:
@@ -45,7 +42,14 @@
 *** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1BWfEy0KKtydklOPQwifuBoSSe8DPfwKWVUQmi61u4XRBwvwF6/?limit=15&utm_campaign=pubmed-2&fc=20220326160355][hochstrasser]]                                                 :hochstrasser:
 *** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1LK5GZMdRGzJtip9gF91OxLMWpktbM44xFPjkpwu-3_wAavIGU/?limit=15&utm_campaign=pubmed-2&fc=20220326160451][hampton]]                                                           :hampton:
 *** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1-MHQbRSTjFatlSijIKXCR7NDQH59yPPeS-QIVdmjxxnza8EgA/?limit=15&utm_campaign=pubmed-2&fc=20220326160704][bowser]]                                                             :bowser:
-*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1jKIOHIm0MJbyjPMeQOyogZM9tVTlzcWLXHB-CPpEloJo5s9CU/?limit=15&utm_campaign=pubmed-2&fc=20220326161001][RBM45]]                                                               :RBM45:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1jKIOHIm0MJbyjPMeQOyogZM9tVTlzcWLXHB-CPpEloJo5s9CU/?limit=100&utm_campaign=pubmed-2&fc=20220326161001][RBM45]]                                                               :RBM45:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1Jgu41lFGSjXSh_Y2PTBY8_j0Gn9Xy2WSReuFoywgmRWxB3UeU/?limit=100&utm_campaign=pubmed-2&fc=20220401110450][Matouschek]]                                                     :matouschek:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/search/1H77a1bY629crOI52RMvKFZJMqZTwvbzj-GNs3xXsjS6n9Gkmx/?limit=100&utm_campaign=pubmed-2&fc=20220609084800][kruglyak]]                                                         :kruglyak:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/journals/0413066/?limit=100&name=Cell&utm_campaign=journals][cell_pubmed]]                                                   :cell_pubmed:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/journals/9802571/?limit=100&name=Mol%2520Cell&utm_campaign=journals][mol_cell_pubmed]]                                           :mol_cell_pubmed:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/journals/101656080/?limit=100&name=Cell%2520Syst&utm_campaign=journals][cell_systems_pubmed]]                                   :cell_systems_pubmed:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/journals/8507085/?limit=100&name=Trends%2520Genet&utm_campaign=journals][trends_genetics_reviews_pubmed]]                            :trends_genetics:
+*** [[https://pubmed.ncbi.nlm.nih.gov/rss/journals/101573691/?limit=100&name=Cell%2520Rep&utm_campaign=journals][cell_reports_pubmed]]                                          :cell_reports:
 ** Biorxiv                                                              :rxiv:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology][rxiv_cell_bio]]                                               :rxiv_cell_bio:
 *** [[http://connect.biorxiv.org/biorxiv_xml.php?subject=genomics][rxiv_genomics]]                                               :rxiv_genomics:

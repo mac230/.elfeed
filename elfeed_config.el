@@ -248,6 +248,21 @@ Useful for catching things you might like to mark as read."
     (shr-browse-url))
   )
 
+;; 2023.11.28 - for paywalled links:
+(defun elfeed-open-umn-proxy-link-nyxt ()
+  "Open a link in an elfeed entry using the UMN's proxy bookmarklet
+service via the nyxt browser."
+  (interactive)
+  (let ((browse-url-generic-program (executable-find "nyxt"))
+        (browse-url-browser-function 'browse-url-generic)
+        (umn-proxy "http://login.ezproxy.lib.umn.edu/login?url=")
+        (url))
+    (goto-char (point-min))
+    (while (not (shr-url-at-point nil))
+      (forward-char 1))
+    (setq url (concat umn-proxy (url-get-url-at-point)))
+    (browse-url url)))
+
 ;; -----
 ;; setup keys for my preference
 (eval-after-load 'elfeed-search
@@ -256,6 +271,7 @@ Useful for catching things you might like to mark as read."
     (define-key elfeed-show-mode-map (kbd "k") 'elfeed-kill-buffer)
     (define-key elfeed-show-mode-map (kbd "l") 'mac-open-elfeed-link)
     (define-key elfeed-show-mode-map (kbd "m") 'elfeed-open-entry-link-in-nyxt)
+    (define-key elfeed-show-mode-map (kbd "u") 'elfeed-open-umn-proxy-link-nyxt)
     (define-key elfeed-show-mode-map (kbd "M-RET") 'nyxt-url-open)
     (define-key elfeed-show-mode-map (kbd "f") (lambda () (interactive) (mac-tag-favorite)))
 
