@@ -3,6 +3,10 @@
 # cell press RSS https://www.cell.com/action/doSearch?text1=rss&field1=AllField&startPage=&target=custom-page&content=webContent
 
 * Feed                                                               :elfeed:
+** Grants                                                             :grants:
+*** [[https://grants.nih.gov/grants/guide/newsfeed/fundingopps.xml][NIH]]                                                                   :nih:
+*** [[https://www.nsf.gov/rss/rss_www_news.xml][NSF_news]]
+*** [[https://www.nsf.gov/rss/rss_www_funding_pgm_annc_inf.xml][NSF_funding]]
 ** Science                                                           :science:
 *** [[http://feeds.nature.com/hdy/rss/current][heredity]]                                                         :heredity:
 *** [[http://feeds.nature.com/nature/rss/current][nature]]                                                             :nature:
